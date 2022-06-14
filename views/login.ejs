@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply</title>
+
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+      <div class="wapper">
+        <div class="fm">
+            <% if(message.length > 0) { %>
+                <div class="message">
+                 <%= message %>
+                </div> 
+              <% } %>
+            <form action="/login" method="post" autocomplete="off">
+                <h2><%= title%></h2>
+                <div class="container">
+                    <div class="name">
+                        <label for="Name">Username:</label><br>
+                        <input type="text" name="name" placeholder="Username" required>
+                    </div>
+                    <div class="password">
+                        <label for="password">Password:</label><br>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="sub_btn">
+                        <input type="submit" value="Login">
+                    </div>
+                </div>
+             </form>
+        </div>
+      </div>     
+</body>
+</html>

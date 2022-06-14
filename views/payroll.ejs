@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> </title>
+
+    <link rel="stylesheet" href="/css/payroll.css">
+</head>
+<body>
+    
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/main">HOME</a></li>
+                <!-- <li><a href="/main/add">ADD EMPLOYEE</a></li>
+                <li><a href="/main/payroll">VIEW PAYROLLS</a></li> -->
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <table border="0">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Department</th>
+                    <th>Dates</th>
+                    <th>Hours</th>
+                    <th>Overtime</th>
+                    <th>Days Absent</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(emp => { %>
+                    <tr>
+                        <td><%= emp.Firstname%> <input type="hidden" name="emp_id" value="<%= emp.employee_id %> "></td>
+                        <td><%= emp.Lastname%></td>
+                        <td><%= emp.Department%></td>
+                        <td><%= emp.Date%></td>
+                        <td><%= emp.StandardHours%></td>
+                        <td><%= emp.OvertimeHours%></td>
+                        <td><%= emp.DaysAbsent%></td>
+                        <td>
+                            <button><a href="/main/edit/<%= emp.PID %> ">Select</a></button>
+                            <button><a href="/main/employee/<%= emp.employee_id %> ">View</a></button>
+                        </td>
+                    </tr>
+                <% }) %>;
+                
+            </tbody>
+        </table>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Edit </title>
+
+    <link rel="stylesheet" href="/css/attendance.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/main">HOME</a></li>
+                <!-- <li><a href="#">ADD EMPLOYEE</a></li> -->
+                <li><a href="/main/payroll">VIEW PAYROLLS</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <form action="/main/pay" method="post" autocomplete="off">
+        <div class="container">
+            <div class="names">
+                <div class="fnm">
+                    <label for="">Firstname:</label><br>
+                    <input type="text" name="f_nm" value="<%= data.first_nm %> " readonly>
+                    <input type="hidden" name="id" value="<%= data.id %> " readonly>
+                    <input type="hidden" name="dept_id" value="<%= data.dep_id %> ">
+                </div>
+                <div class="lnm">
+                    <label for="">Lastname:</label><br>
+                    <input type="text" name="l_nm" value="<%= data.last_nm %> " readonly>
+                </div>
+            </div>
+
+            <div class="date">
+                    <label for="">Date:</label>
+                    <input type="date" name="dt" required>
+            </div>
+
+            <div class="times">
+                <div class="stand_tm">
+                    <label for="">Work Hours:</label>
+                    <input type="number" placeholder="Number of hours" step="0.1" name="stnd_tm" required>
+                </div>
+                <div class="over_tm">
+                    <label for="">Overtime Hours:</label>
+                    <input type="number" placeholder="Number of Hours" step="0.1" name="over_tm" required>
+                </div>
+            </div>
+
+            <div class="absent">
+                <label for="">Absent Days:</label>
+                <input type="number" name="abs_day" placeholder="Number of days absent">
+            </div>
+           
+            <div class="sub_btn">
+                <input type="submit" value="Add">
+            </div>
+        </div>
+    </form>
+</body>
+</html>
