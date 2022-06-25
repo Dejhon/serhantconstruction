@@ -15,7 +15,7 @@
             <ul>
                 <li><a href="/supervisor">HOME</a></li>
                 <li><a href="/supervisor/add">ADD EMPLOYEE</a></li>
-                <li><a href="/supervisor/attendanceDets">Attendance Records</a></li>
+                <li><a href="/supervisor/attendanceDets">ATTENDANCE RECORDS</a></li>
                 <li class="login"><a href="/logout">LOG OUT</a></li>
             </ul>
         </nav>
@@ -40,8 +40,8 @@
                         <td><%= emp.Lastname%></td>
                         <td><%= emp.Department%></td>
                         <td>
-                            <button><a href="/supervisor/attendance/<%= emp.ID %> ">Attendance</a></button>
-                            <button><a href="#">View</a></button>
+                            <button><a href="/supervisor/deleteEmployee/<%= emp.ID %> ">Delete</a></button>
+                            <button><a href="/supervisor/attendance/<%= emp.ID %> "> Add Attendance</a></button>
                         </td>
                     </tr>
                 <% }) %>;

@@ -18,6 +18,37 @@
             </ul>
         </nav>
     </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Days Absent</th>
+                    <th>Standard Hours</th>
+                    <th>Overtime Hours</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <% data.forEach(att => { %>
+                        <td><%= att.Firstname%> &nbsp;<%= att.Lastname%> </td>
+                        <td><%= att.PayStart%></td>
+                        <td><%= att.PayEnd %> </td>
+                        <td><%= att.DaysAbsent %> </td>
+                        <td><%= att.StandardHours %> </td>
+                        <td><%= att.OvertimeHours%></td>
+                        <td>
+                            <button><a href="#">Edit</a></button>
+                        </td>
+                    <% }); %>
+                </tr>
+            </tbody>
+        </table>
+    </main>
     
 </body>
 </html>

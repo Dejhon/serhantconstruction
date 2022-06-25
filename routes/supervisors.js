@@ -24,7 +24,7 @@ router.get('/', (req, res)=>{
 });
 /*****************************************************/
 
-/**THIS BLOCK OF CODE ADDS EMPLOYEE INFORMATION**/
+/**THIS BLOCK OF CODE ADDS AND DELETES EMPLOYEE INFORMATION**/
 router.get('/attendance', (req, res)=>{
   let sql = "SELECT * FROM departments"
       
@@ -63,6 +63,15 @@ router.post('/post', (req,res)=>{
         });
     });
 });
+
+router.get('/deleteEmployee/:id', (req, res)=>{
+   let sql = `DELETE FROM employees WHERE ID = ${req.params.id}`
+
+   conn.query(sql,(err, rows)=>{
+       if(err) throw err
+       res.redirect('/supervisor')
+   })
+})
 /*********************************************/
 
 /**THIS BLOCK OF CODE ADDS EMPLOYEE ATTENDANCE INFORMATION**/
@@ -115,7 +124,7 @@ router.get('/attendance/:id', (req, res)=>{
 /**THIS BLOCK OF CODE VIEWS, AND EDITS EMPLOYEE'S ATTENDANCE RECORD**/
 router.get('/attendanceDets', (req, res)=>{
   let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname ,
-  att.pay_start_dt AS PayStart, att.pay_end_dt AS PayEnd, 
+  date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
   att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays,
   att.standard_hrs_wrk AS StandardHours, att.overtime_hrs_wrk AS
   OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate

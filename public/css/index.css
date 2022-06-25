@@ -64,7 +64,7 @@ nav .contact{
 
 table{
     margin: auto;
-    width: 1000px;
+    width: 1200px;
     margin-top: 60px;
 }
 
@@ -86,7 +86,7 @@ td button{
     border:1px solid #39A4AC;
     background-color: #39A4AC;
     border-radius: 5px;
-    width: 110px;
+    width: 200px;
 }
 
 td button a{

@@ -61,3 +61,39 @@ nav .contact{
     margin-left: 80px;
     margin-top: 10px;
 }
+
+table{
+    margin: auto;
+    width: 1000px;
+    margin-top: 30px;
+}
+
+th{
+    text-align: center;
+    border:1px solid #39A4AC;
+    border-right: none;
+    border-left: none;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+td{
+    text-align: center;
+    height: 30px;
+    font-size: 16px;
+}
+
+td button{
+    width: 80px;
+    padding: 3px;
+    background-color: #39A4AC;
+    border: 1px solid #39A4AC;
+    border-radius: 5px;
+}
+
+td button a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
