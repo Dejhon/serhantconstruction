@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/salaryAnalysis.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/worker">HOME</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="table1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Days Absent</th>
+                        <th>Standard Hours</th>
+                        <th>Overtime Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Adata.forEach(att => { %>
+                    <tr>
+                            <td><%= att.Firstname%> &nbsp;<%= att.Lastname%> </td>
+                            <td><%= att.PayStart%></td>
+                            <td><%= att.PayEnd %> </td>
+                            <td><%= att.DaysAbsent %> </td>
+                            <td><%= att.StandardHours %> </td>
+                            <td><%= att.OvertimeHours%></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <div class="table2">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Basic Pay</th>
+                        <th>Overtime Pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Edata.forEach(pay => { %>
+                    <tr>
+                        <td><%= pay.Firstname %>&nbsp;<%= pay.Lastname%> </td>
+                        <td><%= pay.StandardPay %> </td>
+                        <td><%= pay.Overtimepay %> </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

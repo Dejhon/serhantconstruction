@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/paycycle.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/worker">HOME</a></li>
+                <!-- <li><a href="/main/add">ADD EMPLOYEE</a></li>
+                <li><a href="/main/payroll">VIEW PAYROLLS</a></li> -->
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form action="/worker/viewPay" method="post">
+            <div class="container">
+                <div class="dates">
+                    <div class="start_dt">
+                        <label for="">Paycycle Start Date:</label><br>
+                        <input type="date" name="start_dt" required>
+                    </div>
+                    <div class="end_dt">
+                        <label for="">Paycycle End Date:</label><br>
+                        <input type="date" name="end_dt" required>
+                    </div>
+                </div>
+                <div class="sub_btn">
+                    <input type="submit" value="VIEW SALARY">
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

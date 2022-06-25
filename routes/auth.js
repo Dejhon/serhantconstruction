@@ -30,7 +30,7 @@ router.post('/login', (req, res)=>{
         }else if(rows[0].type == 3){
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/workers')
+            res.redirect('/worker')
         };       
     });
 });
