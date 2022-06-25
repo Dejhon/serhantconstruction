@@ -122,14 +122,12 @@ router.get('/attendance/:id', (req, res)=>{
 
 /**THIS BLOCK OF CODE VIEWS, AND EDITS EMPLOYEE'S ATTENDANCE RECORD**/
 router.get('/attendanceDets', (req, res)=>{
-  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname ,att.id AS ID,
+  let sql = `SELECT att.id AS ID, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
   date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
-  att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays,
-  att.standard_hrs_wrk AS StandardHours, att.overtime_hrs_wrk AS
-  OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate
-  AS OvertimeRate FROM serhantconstruction.attendance AS att JOIN 
-  serhantconstruction.employees AS emp ON att.emp_id = emp.id JOIN
-  serhantconstruction.departments AS dp ON emp.id = dp.id;`
+  att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk AS StandardHours, 
+  att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate
+  FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS emp ON att.emp_id = emp.id 
+  JOIN serhantconstruction.departments AS dp ON emp.department_id= dp.id`
 
   conn.query(sql, (err, rows)=>{
     if(err) throw err
@@ -140,14 +138,12 @@ router.get('/attendanceDets', (req, res)=>{
 });
 
 router.get('/attendanceEdit/:id', (req, res)=>{
-  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname , att.id AS ID,
+  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname, att.id AS ID,
   date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
-  att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays,
-  att.standard_hrs_wrk AS StandardHours, att.overtime_hrs_wrk AS
-  OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate
-  AS OvertimeRate FROM serhantconstruction.attendance AS att JOIN 
-  serhantconstruction.employees AS emp ON att.emp_id = emp.id JOIN
-  serhantconstruction.departments AS dp ON emp.id = dp.id WHERE att.id = ${req.params.id}`
+  att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk AS StandardHours, 
+  att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate 
+  FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS emp ON att.emp_id = emp.id 
+  JOIN serhantconstruction.departments AS dp ON emp.department_id = dp.id WHERE att.emp_id = ${req.params.id}`
 
   conn.query(sql, (err, rows)=>{
     if(err) throw err

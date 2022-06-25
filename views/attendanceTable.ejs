@@ -33,8 +33,8 @@
                 </tr>
             </thead>
             <tbody>
+                <% data.forEach(att => { %>
                 <tr>
-                    <% data.forEach(att => { %>
                         <td><%= att.Firstname%> &nbsp;<%= att.Lastname%> </td>
                         <td><%= att.PayStart%></td>
                         <td><%= att.PayEnd %> </td>
@@ -45,8 +45,8 @@
                             <button><a href="/supervisor/attendanceEdit/<%= att.ID %> ">Edit</a></button>
                             <button class="salary"><a href="/supervisor/pay/<%= att.ID %> ">Salary</a></button>
                         </td>
-                    <% }); %>
                 </tr>
+                <% }); %>
             </tbody>
         </table>
     </main>
