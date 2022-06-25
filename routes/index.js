@@ -5,113 +5,95 @@ const res = require('express/lib/response');
 const conn = require('../lib/db');
 var router = express.Router();
 
-router.get('/', (req, res)=>{
-    let sql = "SELECT emp.id AS ID_num, emp.first_nm AS Firstname, emp.last_nm AS Lastname, dp.name AS Department FROM employees AS emp JOIN departments AS dp ON emp.id = dp.id"
-
-    conn.query(sql, (err, rows)=>{
-        if(err) throw err
-        res.render('index',{
-        title:"Admin Page",
-        data: rows
-    });
-  });
-});
-
-router.get('/add', (req, res)=>{
-    res.render('addEmployees',{
-        title: "Add Employee Form"
-    });
-});
-
-router.post('/post', (req,res)=>{
-
-    let udata = {
-                 user_type_id:2,
-                 user_nm: req.body.f_nm,
-                 password: req.body.password
-                }
-
-    let data = {
-                 first_nm: req.body.f_nm,
-                 last_nm: req.body.l_nm,
-                 dep_id: req.body.dept
-               }
-
-    let sql = "INSERT INTO employees SET ?"
-    let usql = "INSERT INTO users SET ?"
-    
-    conn.query(sql, data, (err, rows)=>{
-        if(err) throw err;
-        conn.query(usql, udata, (err, rows)=>{
-            if(err) throw err
-            res.redirect('/main')
-        });
-    });
-});
-
-router.get('/edit/:id', (req, res)=>{
-    let sql = `SELECT * FROM employees WHERE id = ${req.params.id}`
-    conn.query(sql, (err, rows)=>{
-        if(err) throw err
-        res.render('attendance',{
-            data: rows[0]
-        });
-    });
-});
-
-router.post('/pay', (req, res)=>{
-
-    let data = {
-                 em_id: req.body.id,
-                //  department_id: req.body.dept_id,
-                 date: req.body.dt,
-                 days_abs: req.body.abs_day,
-                 wrk_hrs: req.body.stnd_tm,
-                 ovr_tm_hrs: req.body.over_tm,
-               }
-    
-    let sql = "INSERT INTO attendance SET ?"
-    
-    conn.query(sql, data, (err, rows)=>{
-        if(err) throw err
-        res.redirect("/main");
-    });
-});
-
-router.get("/attendance", (req, res)=>{
-    
-})
-
-// router.get('/payroll', (req, res)=>{
-//     let sql = `SELECT emp.first_nm As Firstname, emp.last_nm AS Lastname, d.name AS Department,
-//     date_format(p.date, '%Y-%d-%m') AS Date, p.num_hrs AS StandardHours, p.num_over_tm AS OvertimeHours, 
-//     p.days_abs AS DaysAbsent,p.id AS PID FROM serhantconstruction.payroll AS p JOIN 
-//     serhantconstruction.employees AS emp ON p.employee_id = emp.id JOIN
-//     serhantconstruction.departments AS d ON p.department_id = d.id;`
+// router.get('/', (req, res)=>{
+//     let sql = `SELECT emp.id AS ID_num, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+//     dp.name AS Department, dp.standard_rate AS standard, dp.overtime_rate AS Overtime
+//     FROM employees AS emp JOIN departments AS 
+//     dp ON emp.id = dp.id`
 
 //     conn.query(sql, (err, rows)=>{
+//         console.log(rows)
 //         if(err) throw err
-//         res.render('payroll',{
-//             title: "Payroll",
-//             data: rows
+//         res.render('employees',{
+//         title:"Admin Page",
+//         data: rows
+//     });
+//   });
+// });
+
+// router.get('/add', (req, res)=>{
+//     res.render('addEmployees',{
+//         title: "Add Employee Form"
+//     });
+// });
+
+// router.post('/post', (req,res)=>{
+
+//     let udata = {
+//                  user_type_id:2,
+//                  user_nm: req.body.f_nm,
+//                  password: req.body.password
+//                 }
+
+//     let data = {
+//                  first_nm: req.body.f_nm,
+//                  last_nm: req.body.l_nm,
+//                  dep_id: req.body.dept
+//                }
+
+//     let sql = "INSERT INTO employees SET ?"
+//     let usql = "INSERT INTO users SET ?"
+    
+//     conn.query(sql, data, (err, rows)=>{
+//         if(err) throw err;
+//         conn.query(usql, udata, (err, rows)=>{
+//             if(err) throw err
+//             res.redirect('/main')
 //         });
 //     });
 // });
 
-// router.get('/employee', (req, res)=>{
-//     let sql = `SELECT emp.first_nm As Firstname, emp.last_nm AS Lastname, d.name AS Department,
-//     date_format(p.date, '%Y-%d-%m') AS Date, p.num_hrs AS StandardHours, p.num_over_tm AS OvertimeHours, 
-//     p.days_abs AS DaysAbsent,p.id AS PID FROM serhantconstruction.payroll AS p JOIN 
-//     serhantconstruction.employees AS emp ON p.employee_id = emp.id JOIN
-//     serhantconstruction.departments AS d ON p.department_id = d.id WHERE p.employee_id = ${req.body.emp_id}`
-
+// router.get('/edit/:id', (req, res)=>{
+//     let sql = `SELECT emp.id AS ID_num, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+//     dp.name AS Department, dp.standard_rate AS standard, dp.overtime_rate AS Overtime
+//     FROM employees AS emp JOIN departments AS 
+//     dp ON emp.id = dp.id WHERE emp.id = ${req.params.id}`
 //     conn.query(sql, (err, rows)=>{
 //         if(err) throw err
-//         res.render('empPayroll',{
-//             data:rows[0]
-//         })
-//     })
-// })
+//         res.render('attendance',{
+//             data: rows[0]
+//         });
+//     });
+// });
 
+// router.post('/pay', (req, res)=>{
+    
+//    let dt = new Date();
+//    let month = dt.getMonth() +1;
+//    let year = dt.getFullYear();
+//    let daysInMonth = new Date(year, month, 0).getDate();
+//    let hrsWork = req.body.tot_dats_wrk * 8
+//    let days_abs = daysInMonth - req.body.days_wrk;
+
+//     let data = {
+//                  employee_id: req.body.id,
+//                  department_id: req.body.dept_id,
+//                  pay_start_dt: req.body.st_dt,
+//                  end_dt: req.body.end_dt, 
+//                  num_hrs: hrsWork,
+//                  num_over_tm: req.body.over_tm,
+//                  days_abs: days_abs,
+//                  tot_days_wrk: req.body.days_wrk,
+//                  ovr_tm_hrs: req.body.over_tm
+//                }
+    
+//     let sql = "INSERT INTO payroll SET ?"
+    
+//     conn.query(sql, data, (err, rows)=>{
+//         console.log(maxWorkDays)
+//         if(err) throw err
+//         res.redirect("/main");
+//     });
+// });
 
 module.exports = router

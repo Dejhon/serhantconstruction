@@ -15,7 +15,8 @@ var mysql = require('mysql');
 var connection  = require('./lib/db');
 
 var index = require('./routes/index');
-var auth = require('./routes/auth')
+var auth = require('./routes/auth');
+var supervisors = require('./routes/supervisors');
 
 const req = require('express/lib/request');
 var app = express();
@@ -51,6 +52,7 @@ var app = express();
 
  app.use('/main', index);
  app.use('/', auth);
+ app.use('/supervisor',supervisors)
 
 
  app.listen(port, () => console.log(`Listening on port ${port}..`));

@@ -22,15 +22,15 @@ router.post('/login', (req, res)=>{
         }else if(rows[0].type == 1){
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/main');           
+            res.redirect('/accounts');           
         }else if(rows[0].type == 2){
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/workers');
+            res.redirect('/supervisor');
         }else if(rows[0].type == 3){
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/supervisors')
+            res.redirect('/workers')
         };       
     });
 });

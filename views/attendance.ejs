@@ -25,19 +25,32 @@
             <div class="names">
                 <div class="fnm">
                     <label for="">Firstname:</label><br>
-                    <input type="text" name="f_nm" value="<%= data.first_nm %> " readonly>
+                    <input type="text" name="f_nm" value="<%= data.Firstname %> " readonly>
                     <input type="hidden" name="id" value="<%= data.id %> " readonly>
                     <input type="hidden" name="dept_id" value="<%= data.dep_id %> ">
+                    <input type="hidden" name="stnd_rt" value="<%= data.standard %> ">
+                    <input type="hidden" name="overtm_rt" value="<%= data.Overtime %> ">
                 </div>
                 <div class="lnm">
                     <label for="">Lastname:</label><br>
-                    <input type="text" name="l_nm" value="<%= data.last_nm %> " readonly>
+                    <input type="text" name="l_nm" value="<%= data.Lastname %> " readonly>
                 </div>
             </div>
 
-            <div class="date">
-                    <label for="">Date:</label>
-                    <input type="date" name="dt" required>
+            <div class="dates">
+                <div class="strt_dt">
+                    <label for="">Payroll Start Date:</label>
+                    <input type="date" name="st_dt" required>
+                </div>
+                <div class="end_dt">
+                    <label for="">Payroll End Date:</label>
+                    <input type="date" name="end_dt" required>
+                </div>
+            </div>
+
+            <div class="workdays">
+                <label for="">Total Days Work:</label>
+                <input type="number" name="days_wrk" placeholder="Number of Days Worked" required>
             </div>
 
             <div class="times">
@@ -51,10 +64,10 @@
                 </div>
             </div>
 
-            <div class="absent">
+            <!-- <div class="absent">
                 <label for="">Absent Days:</label>
                 <input type="number" name="abs_day" placeholder="Number of days absent">
-            </div>
+            </div> -->
            
             <div class="sub_btn">
                 <input type="submit" value="Add">

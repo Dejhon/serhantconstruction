@@ -65,32 +65,32 @@ nav .contact{
 form{
     margin: auto;
     width: 400px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 input{
     outline: none;
 }
 
-.names, .times{
+.names, .dates, .times{
     display: grid;
     grid-template-columns: 50% 50%;
     gap: 10px;
 }
 
-.names, .date, .absent, .times, .sub_btn{
+.names,.dates,  .absent, .times, .workdays, .sub_btn{
     margin-top: 30px;
 }
 
-.password, .absent, .date, .sub_btn{
+.password, .absent, .workdays, .sub_btn{
     display: grid;
     grid-template-columns: 100%;
 }
-.names input,.times input{
+.names input, .dates input, .times input{
     width: 185px;
 }
 
-.names input, .times input, .absent input, .date input, .sub_btn input{
+.names input, .times input, .absent input, .dates input,.workdays input, .sub_btn input{
     height: 30px;
 }
 
