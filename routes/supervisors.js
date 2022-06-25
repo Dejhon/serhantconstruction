@@ -125,9 +125,10 @@ router.get('/attendanceDets', (req, res)=>{
   let sql = `SELECT att.id AS ID, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
   date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
   att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk AS StandardHours, 
-  att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate
-  FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS emp ON att.emp_id = emp.id 
-  JOIN serhantconstruction.departments AS dp ON emp.department_id= dp.id`
+  att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate,
+  sp.first_nm AS Supervisor FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS
+  emp ON att.emp_id = emp.id JOIN serhantconstruction.departments AS dp ON emp.department_id= dp.id JOIN 
+  serhantconstruction.supervisors AS sp ON dp.spvsr_id = sp.id WHERE sp.first_nm = '${req.session.username}'`
 
   conn.query(sql, (err, rows)=>{
     if(err) throw err
@@ -143,17 +144,17 @@ router.get('/attendanceEdit/:id', (req, res)=>{
   att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk AS StandardHours, 
   att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate 
   FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS emp ON att.emp_id = emp.id 
-  JOIN serhantconstruction.departments AS dp ON emp.department_id = dp.id WHERE att.emp_id = ${req.params.id}`
+  JOIN serhantconstruction.departments AS dp ON emp.department_id = dp.id WHERE att.id = ${req.params.id}`
 
   conn.query(sql, (err, rows)=>{
     if(err) throw err
-    res.render('attendanceEdit',{
+     res.render('attendanceEdit',{
       data: rows[0]
     });
   });
 });
 
-router.post('/attendanceUpdate/:id',(req, res)=>{
+router.post('/attendanceUpdate',(req, res)=>{
     let id = req.body.id;
     let sql = `UPDATE attendance SET overtime_hrs_wrk = ${req.body.new_overtime} WHERE id =${id}`
 
@@ -166,13 +167,13 @@ router.post('/attendanceUpdate/:id',(req, res)=>{
 
 /**THIS BLOCK OF CODE CALCULATE SALARY FOR EMPLPYEES**/
 router.get('/pay/:id', (req, res)=>{
-     let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname , att.id AS ID,
+     let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname, att.id AS ID,
      date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') 
      AS PayEnd,att.emp_id AS empID, att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk 
      AS StandardHours, att.overtime_hrs_wrk AS OvertimeHours,dp.name AS Department, dp.standard_rate AS StandardRate,
      dp.overtime_rate AS OvertimeRate FROM serhantconstruction.attendance AS att JOIN
      serhantconstruction.employees AS emp ON att.emp_id = emp.id JOIN serhantconstruction.departments 
-     AS dp ON emp.id = dp.id WHERE att.id = ${req.params.id}`
+     AS dp ON emp.department_id = dp.id WHERE att.id = ${req.params.id}`
 
      conn.query(sql, (err, rows)=>{
       if(err) throw err
@@ -198,7 +199,6 @@ router.post('/payroll', (req, res)=>{
 
     conn.query("INSERT INTO payroll SET ?", data, (err, rows)=>{
       if(err) throw err
-      console.log(standardPay, overtimePay, salary)
       res.redirect('/supervisor')
     })
 })

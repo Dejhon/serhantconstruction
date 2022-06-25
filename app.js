@@ -14,7 +14,7 @@ var mysql = require('mysql');
 //Setup External Files
 var connection  = require('./lib/db');
 
-var index = require('./routes/index');
+var workers = require('./routes/workers');
 var auth = require('./routes/auth');
 var supervisors = require('./routes/supervisors');
 
@@ -50,9 +50,9 @@ var app = express();
  app.use(flash());
 //  app.use(expressLayouts);
 
- app.use('/main', index);
  app.use('/', auth);
  app.use('/supervisor',supervisors)
+ app.use('/worker', workers);
 
 
  app.listen(port, () => console.log(`Listening on port ${port}..`));
