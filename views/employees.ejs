@@ -13,9 +13,9 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/main">HOME</a></li>
-                <li><a href="/main/add">ADD EMPLOYEE</a></li>
-                <li><a href="#">VIEW PAYROLLS</a></li>
+                <li><a href="/supervisor">HOME</a></li>
+                <li><a href="/supervisor/add">ADD EMPLOYEE</a></li>
+                <li><a href="/supervisor/attendanceDets">Attendance Records</a></li>
                 <li class="login"><a href="/logout">LOG OUT</a></li>
             </ul>
         </nav>
@@ -35,12 +35,12 @@
             <tbody>
                 <% data.forEach(emp => { %>
                     <tr>
-                        <td><%= emp.ID_num%></td>
+                        <td><%= emp.ID%></td>
                         <td><%= emp.Firstname%></td>
                         <td><%= emp.Lastname%></td>
                         <td><%= emp.Department%></td>
                         <td>
-                            <button><a href="/main/edit/<%= emp.ID_num %> ">Attendance</a></button>
+                            <button><a href="/supervisor/attendance/<%= emp.ID %> ">Attendance</a></button>
                             <button><a href="#">View</a></button>
                         </td>
                     </tr>
