@@ -22,6 +22,7 @@
     <main>
         <div class="table1">
             <table>
+                <caption>ATTENDANCE RECORD</caption>
                 <thead>
                     <tr>
                         <th>Employee Name</th>
@@ -48,19 +49,22 @@
         </div>
         <div class="table2">
             <table>
+                <caption>SALARY BREAKDOWN</caption>
                 <thead>
                     <tr>
                         <th>Employee Name</th>
                         <th>Basic Pay</th>
                         <th>Overtime Pay</th>
+                        <th>Salary</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% Edata.forEach(pay => { %>
                     <tr>
                         <td><%= pay.Firstname %>&nbsp;<%= pay.Lastname%> </td>
-                        <td><%= pay.StandardPay %> </td>
-                        <td><%= pay.Overtimepay %> </td>
+                        <td>$<%= pay.StandardPay %>JMD </td>
+                        <td>$<%= pay.OvertimePay %>JMD </td>
+                        <td>$<%= pay.Salary %>JMD </td>
                     </tr>
                     <% }); %>
                 </tbody>

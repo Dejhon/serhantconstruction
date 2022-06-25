@@ -62,14 +62,14 @@ nav .contact{
     margin-top: 10px;
 }
 
-.table1{
+.table1 table{
     margin: auto;
     width: 1200px;
     margin-top: 25px;
 }
 
 
-.table2{
+.table2 table{
     margin: auto;
     width: 800px;
     margin-top: 30px;
@@ -87,4 +87,9 @@ th{
 td{
     height: 30px;
     text-align: center;
+}
+
+caption{
+    font-size: 30px;
+    color: #39A4AC;
 }

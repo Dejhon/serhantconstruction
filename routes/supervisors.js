@@ -203,4 +203,8 @@ router.post('/payroll', (req, res)=>{
     })
 })
 /*****************************************************/
+
+/**THIS BLOCK OF CODE DISPLAYS SALARY FOR ALL EMPLOYEES WITH A PARTICULAR DEPARTMENT**/
+
+/*************************************************************************************/
 module.exports = router
