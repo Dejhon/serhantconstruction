@@ -64,14 +64,14 @@ nav .contact{
 
 table{
     margin: auto;
-    width: 99%;
+    width: 85%;
     margin-top: 60px;
 }
 
 th,td{
     height: 30px;
     text-align: center;
-    font-size: 25px;
+    font-size: 18px;
 }
 
 th{
@@ -86,7 +86,9 @@ td button{
     border:1px solid #39A4AC;
     background-color: #39A4AC;
     border-radius: 5px;
-    width: 70px;
+    width: 200px;
+    color: white;
+    font-size: 18px;
 }
 
 td button a{

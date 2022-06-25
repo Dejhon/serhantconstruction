@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary </title>
+
+    <link rel="stylesheet" href="/css/empPayroll.css">
+</head>
+<body>
+    
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/main">HOME</a></li>
+                <!-- <li><a href="/main/add">ADD EMPLOYEE</a></li>
+                <li><a href="/main/payroll">VIEW PAYROLLS</a></li> -->
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <table border="0">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Department</th>
+                    <th>Hours</th>
+                    <th>Overtime</th>
+                    <th>Days Absent</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="/supervisor/payroll" method="post">
+
+                <% data.forEach(emp => { %>
+                    <tr>
+                        <td>
+                            <%= emp.Firstname%>
+                            <input type="hidden" name="emp_id" value="<%= emp.empID %> ">
+                            <input type="hidden" name="stnd_rt" value="<%= emp.StandardRate %> ">
+                            <input type="hidden" name="over_rt" value="<%=emp.OvertimeRate %> ">
+                        </td>
+                        <td><%= emp.Lastname%></td>
+                        <td><%= emp.Department%></td>
+                        <td>
+                            <%= emp.StandardHours%>
+                            <input type="hidden" name="stnd_hrs" value="<%= emp.StandardHours %> ">
+                        </td>
+                        <td>
+                            <%= emp.OvertimeHours%>
+                            <input type="hidden" name="overtime_hrs" value="<%= emp.OvertimeHours %> ">
+                        </td>
+                        <td>
+                            <%= emp.DaysAbsent%>
+                            <input type="hidden" name="days_abs" value="<%= emp.DaysAbsent %> ">
+                            <input type="hidden" name="totalDays" value="<%= emp.TotalDays%>">
+                            <input type="hidden" name="start_dt" value="<%= emp.PayStart %> ">
+                            <input type="hidden" name="end_dt" value="<%= emp.PayEnd %> ">
+                        </td>
+                        <td>
+                            <button>Calculate Salary</button>
+                        </td>
+                    </tr>
+                <% }) %>;
+               </form>   
+            </tbody>
+        </table>
+
+</body>
+</html>

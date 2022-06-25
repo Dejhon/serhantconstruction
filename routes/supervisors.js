@@ -157,7 +157,7 @@ router.get('/attendanceEdit/:id', (req, res)=>{
   });
 });
 
-router.post('/attendanceUpdate',(req, res)=>{
+router.post('/attendanceUpdate/:id',(req, res)=>{
     let id = req.body.id;
     let sql = `UPDATE attendance SET overtime_hrs_wrk = ${req.body.new_overtime} WHERE id =${id}`
 
@@ -167,4 +167,44 @@ router.post('/attendanceUpdate',(req, res)=>{
     });
 });
 /********************************************************************/
+
+/**THIS BLOCK OF CODE CALCULATE SALARY FOR EMPLPYEES**/
+router.get('/pay/:id', (req, res)=>{
+     let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname , att.id AS ID,
+     date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') 
+     AS PayEnd,att.emp_id AS empID, att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk 
+     AS StandardHours, att.overtime_hrs_wrk AS OvertimeHours,dp.name AS Department, dp.standard_rate AS StandardRate,
+     dp.overtime_rate AS OvertimeRate FROM serhantconstruction.attendance AS att JOIN
+     serhantconstruction.employees AS emp ON att.emp_id = emp.id JOIN serhantconstruction.departments 
+     AS dp ON emp.id = dp.id WHERE att.id = ${req.params.id}`
+
+     conn.query(sql, (err, rows)=>{
+      if(err) throw err
+      res.render('empSalary', {
+        data:rows
+      })
+    });
+});
+
+router.post('/payroll', (req, res)=>{
+
+  let standardPay = ((req.body.stnd_rt * req.body.stnd_hrs) * req.body.totalDays).toFixed(2);
+  let overtimePay = ((req.body.over_rt * req.body.overtime_hrs) * req.body.totalDays).toFixed(2)
+  let salary = (parseInt(standardPay) + parseInt(overtimePay)).toFixed(2)
+  let data = {
+               employee_id: req.body.emp_id,
+               pay_start_dt: req.body.start_dt,
+               pay_end_dt: req.body.end_dt,
+               standard_pay: standardPay,
+               overtime_pay: overtimePay,
+               salary: salary
+             }
+
+    conn.query("INSERT INTO payroll SET ?", data, (err, rows)=>{
+      if(err) throw err
+      console.log(standardPay, overtimePay, salary)
+      res.redirect('/supervisor')
+    })
+})
+/*****************************************************/
 module.exports = router
