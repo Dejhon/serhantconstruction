@@ -62,46 +62,59 @@ nav .contact{
     margin-top: 10px;
 }
 
-table{
+form{
     margin: auto;
-    width: 1100px;
+    width: 500px;
     margin-top: 30px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-th{
-    text-align: center;
-    border:1px solid #39A4AC;
-    border-right: none;
-    border-left: none;
+
+.emp_nm{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 1px;
+}
+
+.emp_nm input, .overtime_hrs input, .new_overtime input{
+    width: inherit;
     height: 30px;
-    border-radius: 5px;
     font-size: 18px;
 }
 
-td{
-    text-align: center;
-    height: 30px;
-    font-size: 16px;
+.overtime_hrs, .new_overtime{
+    display: grid;
+    grid-template-columns: 100%;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
-td button{
-    width: 80px;
-    padding: 3px;
+.emp_nm, .overtime_hrs,.new_overtime, .sub_btn{
+    margin-top: 20px;
+}
+
+.emp_nm label{
+    float: left;
+    margin-left: 21px;
+}
+
+.overtime_hrs label{
+    margin-left: -285px;
+}
+
+.new_overtime label{
+    margin-left: -305px;
+}
+
+.sub_btn input{
+    border:1px solid #39A4AC;
     background-color: #39A4AC;
-    border: 1px solid #39A4AC;
-    border-radius: 5px;
-}
-
-td button a {
-    text-decoration: none;
     color: white;
-    font-size: 16px;
-}
-
-.salary{
-    width: 150px;
-    padding: 3px;
-    background-color: #39A4AC;
-    border: 1px solid #39A4AC;
+    font-size: 18px;
+    width: 110px;
     border-radius: 5px;
 }

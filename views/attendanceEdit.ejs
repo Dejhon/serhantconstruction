@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/attendanceedit.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/supervisor">HOME</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form action="/supervisor/attendanceUpdate" method="post">
+            <div class="container">
+                <div class="emp_nm">
+                    <div class="first">
+                        <label for="">Employee Firstname:</label>
+                        <input type="text" value="<%= data.Firstname %> " readonly>
+                        <input type="hidden" name="id" value="<%= data.ID %>">
+                    </div>
+                    <div class="last">
+                        <label for="">Employee Lastname:</label>
+                        <input type="text" value="<%= data.Lastname %> " readonly>
+                    </div>
+                </div>
+                <div class="overtime_hrs">
+                    <label for="">Current Overtime Hours:</label>
+                    <input type="number" value="<%= data. OvertimeHours%>" readonly>
+                </div>
+                <div class="new_overtime">
+                    <label for="">New Overtime Hours:</label>
+                    <input type="text" name="new_overtime" required>
+                </div>
+                <div class="sub_btn">
+                    <input type="submit" value="UPDATE">
+                </div>
+            </div>
+        </form>       
+    </main>
+    
+</body>
+</html>

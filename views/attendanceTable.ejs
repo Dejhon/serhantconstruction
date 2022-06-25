@@ -42,7 +42,8 @@
                         <td><%= att.StandardHours %> </td>
                         <td><%= att.OvertimeHours%></td>
                         <td>
-                            <button><a href="#">Edit</a></button>
+                            <button><a href="/supervisor/attendanceEdit/<%= att.ID %> ">Edit</a></button>
+                            <button class="salary"><a href="#">Calculate Salary</a></button>
                         </td>
                     <% }); %>
                 </tr>

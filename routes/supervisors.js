@@ -35,8 +35,7 @@ router.get('/attendance', (req, res)=>{
         data: rows
       });
    });
-})
-     
+});     
 
 router.post('/post', (req,res)=>{
 
@@ -70,8 +69,8 @@ router.get('/deleteEmployee/:id', (req, res)=>{
    conn.query(sql,(err, rows)=>{
        if(err) throw err
        res.redirect('/supervisor')
-   })
-})
+   });
+});
 /*********************************************/
 
 /**THIS BLOCK OF CODE ADDS EMPLOYEE ATTENDANCE INFORMATION**/
@@ -123,7 +122,7 @@ router.get('/attendance/:id', (req, res)=>{
 
 /**THIS BLOCK OF CODE VIEWS, AND EDITS EMPLOYEE'S ATTENDANCE RECORD**/
 router.get('/attendanceDets', (req, res)=>{
-  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname ,
+  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname ,att.id AS ID,
   date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
   att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays,
   att.standard_hrs_wrk AS StandardHours, att.overtime_hrs_wrk AS
@@ -138,6 +137,34 @@ router.get('/attendanceDets', (req, res)=>{
       data:rows
     });
   });
+});
+
+router.get('/attendanceEdit/:id', (req, res)=>{
+  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname , att.id AS ID,
+  date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
+  att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays,
+  att.standard_hrs_wrk AS StandardHours, att.overtime_hrs_wrk AS
+  OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate
+  AS OvertimeRate FROM serhantconstruction.attendance AS att JOIN 
+  serhantconstruction.employees AS emp ON att.emp_id = emp.id JOIN
+  serhantconstruction.departments AS dp ON emp.id = dp.id WHERE att.id = ${req.params.id}`
+
+  conn.query(sql, (err, rows)=>{
+    if(err) throw err
+    res.render('attendanceEdit',{
+      data: rows[0]
+    });
+  });
+});
+
+router.post('/attendanceUpdate',(req, res)=>{
+    let id = req.body.id;
+    let sql = `UPDATE attendance SET overtime_hrs_wrk = ${req.body.new_overtime} WHERE id =${id}`
+
+    conn.query(sql, (err, rows)=>{
+      if(err) throw err
+      res.redirect('/supervisor/attendanceDets')
+    });
 });
 /********************************************************************/
 module.exports = router
