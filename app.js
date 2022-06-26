@@ -17,6 +17,7 @@ var connection  = require('./lib/db');
 var workers = require('./routes/workers');
 var auth = require('./routes/auth');
 var supervisors = require('./routes/supervisors');
+var accounts = require('./routes/accounts');
 
 const req = require('express/lib/request');
 var app = express();
@@ -51,8 +52,9 @@ var app = express();
 //  app.use(expressLayouts);
 
  app.use('/', auth);
- app.use('/supervisor',supervisors)
+ app.use('/supervisor',supervisors);
  app.use('/worker', workers);
+ app.use('/accountant',accounts);
 
 
  app.listen(port, () => console.log(`Listening on port ${port}..`));

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/slipsearch.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/accountant">HOME</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form action="/accountant/slips" method="post">
+            <div class="names">
+                <div class="f">
+                    <input type="text" name="f_nm" placeholder="Firstname" required>
+                </div>
+                <div class="l">
+                    <input type="text" name="l_nm" placeholder="Lastname" required>
+                </div>
+            </div>
+            <div class="sub_btn">
+                <input type="submit" value="SEARCH">
+            </div>
+            
+        </form>
+    </main>
+</body>
+</html>

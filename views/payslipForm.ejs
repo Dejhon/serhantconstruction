@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/pasyslipform.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/accountant">HOME</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <form action="/accountant/generate" method="post">
+            <div class="container">
+                <div class="names">
+                    <div class="f_nm">
+                        <label for="">Firstname:</label>
+                        <input type="text" name="firstname" value="<%= data.Firstname%> " readonly>
+                    </div>
+                    <div class="l_nm">
+                        <label for="">Lastname:</label>
+                        <input type="text" name="lastname" value="<%= data.Lastname%> " readonly>
+                    </div>
+                </div>
+                <div class="dates">
+                    <div class="start_dt">
+                        <label for="">Start Date:</label>
+                        <input type="text" name="start" value="<%=data.PayStart %> " readonly>
+                    </div>
+                    <div class="end_dt">
+                        End Date:
+                        <input type="text" name="end" value="<%=data.PayEnd %> " readonly>
+                    </div>
+                </div>
+                <div class="salary">
+                    <label for="">Salary:</label>
+                    <input type="text" name="salary" value="<%= data.Salary %> " readonly>
+                </div>
+                <div class="sub_btn">
+                    <input type="submit" value="GENERATE">
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

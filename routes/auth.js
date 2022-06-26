@@ -22,7 +22,7 @@ router.post('/login', (req, res)=>{
         }else if(rows[0].type == 1){
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/accounts');           
+            res.redirect('/accountant');           
         }else if(rows[0].type == 2){
             req.session.loggedin = true;
             req.session.username = username;
