@@ -69,4 +69,31 @@ AND ps.emp_last_nm LIKE '%${req.body.l_nm}%'`
     })
 })
 
+
+router.get('/viewSalaryBreakdown', (req, res)=>{
+    res.render("dateRange")
+})
+
+router.post('/breakdown',(req, res)=>{
+    let Esql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+    date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(p.pay_end_dt, '%Y-%m-%d')
+    AS PayEnd, p.standard_pay
+    AS StandardPay, p.overtime_pay AS OvertimePay, p.salary AS Salary
+    FROM serhantconstruction.payroll AS p JOIN serhantconstruction.employees
+    AS emp ON p.employee_id = emp.id WHERE emp.first_nm = '${req.session.username}'
+    AND p.pay_start_dt = '${req.body.start_dt}' AND p.pay_end_dt = '${req.body.end_dt}'`
+
+    conn.query(Esql, (err, Erows)=>{
+        if(err) throw err
+        conn.query(Asql, (err, Arows)=>{
+            if(err) throw err
+            res.render('salaryAnalysis',{
+                Edata: Erows,
+                Adata: Arows
+            })
+        })
+    })
+
+})
+
 module.exports = router
