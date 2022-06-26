@@ -57,8 +57,8 @@ router.get('/search', (req, res)=>{
 
 router.post('/slips', (req, res)=>{
 let sql=`SELECT  ps.emp_first_nm AS Firstname, ps.emp_last_nm AS Lastname,
-ps.paycycle_start CycleStart, ps.paycycle_end AS CycleEnd, ps.salary 
-AS Salary FROM serhantconstruction.payslip AS ps WHERE ps.emp_first_nm LIKE '%${req.body.lf_nm}%'
+date_format(ps.paycycle_start, '%Y-%m-%d') CycleStart, date_format(ps.paycycle_end, '%Y-%m-%d') AS CycleEnd, ps.salary 
+AS Salary FROM serhantconstruction.payslip AS ps WHERE ps.emp_first_nm LIKE '%${req.body.f_nm}%'
 AND ps.emp_last_nm LIKE '%${req.body.l_nm}%'`
 
     conn.query(sql, (err, rows)=>{

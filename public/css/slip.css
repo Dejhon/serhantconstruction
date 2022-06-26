@@ -61,3 +61,20 @@ nav .contact{
     margin-left: 80px;
     margin-top: 10px;
 }
+
+.container{
+    margin: auto;
+    width: 300px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.start, .end, .salary{
+    border:1px solid #39A4AC;
+    border-style: dashed;
+    border-radius: 5px;
+    border-left: none;
+    border-right: none;
+}

@@ -22,7 +22,19 @@
            
                 <div class="container">
                     <% data.forEach(element => { %>
-                       <h1>PAYSLIP FOR <%= element.Firstname %> &nbsp; <%= element.Lastname %>  </h1>4
+                       <h2>Payslip For <%= element.Firstname %> &nbsp; <%= element.Lastname %>  </h2>
+                       <div class="start">
+                        <strong>Paycycle Start Date:</strong><br>
+                        <p><%= element.CycleStart %> </p>
+                       </div>
+                       <div class="end">
+                        <strong>Paycycle End Date:</strong><br>
+                        <p><%= element.CycleEnd %> </p>
+                       </div>
+                       <div class="salary">
+                        <strong>Salary:</strong><br>
+                        <p>$<%= element.Salary %>JMD </p>
+                       </div>
                     <% }); %>  
                 </div>
         </main>
