@@ -75,21 +75,41 @@ router.get('/viewSalaryBreakdown', (req, res)=>{
 })
 
 router.post('/breakdown',(req, res)=>{
-    let Esql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+    let maxsql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname,
     date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(p.pay_end_dt, '%Y-%m-%d')
     AS PayEnd, p.standard_pay
-    AS StandardPay, p.overtime_pay AS OvertimePay, p.salary AS Salary
+    AS StandardPay, p.overtime_pay AS OvertimePay, max(p.salary) AS Salary
     FROM serhantconstruction.payroll AS p JOIN serhantconstruction.employees
-    AS emp ON p.employee_id = emp.id WHERE emp.first_nm = '${req.session.username}'
-    AND p.pay_start_dt = '${req.body.start_dt}' AND p.pay_end_dt = '${req.body.end_dt}'`
+    AS emp ON p.employee_id = emp.id WHERE p.pay_start_dt = '${req.body.start_dt}'
+    AND p.pay_end_dt = '${req.body.end_dt}'`
 
-    conn.query(Esql, (err, Erows)=>{
+    let minsql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+    date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(p.pay_end_dt, '%Y-%m-%d')
+    AS PayEnd, p.standard_pay
+    AS StandardPay, p.overtime_pay AS OvertimePay, min(p.salary) AS Salary
+    FROM serhantconstruction.payroll AS p JOIN serhantconstruction.employees
+    AS emp ON p.employee_id = emp.id WHERE p.pay_start_dt = '${req.body.start_dt}'
+    AND p.pay_end_dt = '${req.body.end_dt}'`
+
+    let total =`SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+    date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(p.pay_end_dt, '%Y-%m-%d')
+    AS PayEnd, p.standard_pay
+    AS StandardPay, p.overtime_pay AS OvertimePay, sum(p.salary) AS Salary
+    FROM serhantconstruction.payroll AS p JOIN serhantconstruction.employees
+    AS emp ON p.employee_id = emp.id WHERE p.pay_start_dt = '${req.body.start_dt}'
+    AND p.pay_end_dt = '${req.body.end_dt}'`
+
+    conn.query(maxsql, (err, maxrows)=>{
         if(err) throw err
-        conn.query(Asql, (err, Arows)=>{
+        conn.query(minsql, (err, minrows)=>{
             if(err) throw err
-            res.render('salaryAnalysis',{
-                Edata: Erows,
-                Adata: Arows
+            conn.query(total, (err, Trows)=>{
+                if(err) throw err
+                res.render('breakdown',{
+                    maxData:maxrows,
+                    minData:minrows,
+                    total: Trows
+                })
             })
         })
     })

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/breakdown.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/accountant">HOME</a></li>
+                <!-- <li><a href="/main/add">ADD EMPLOYEE</a></li>
+                <li><a href="/main/payroll">VIEW PAYROLLS</a></li> -->
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="table1">
+            <table>
+                <caption>Maximum Salary Payout</caption>
+                <thead>
+                    <tr>
+                        <th>Paycycle Start</th>
+                        <th>paycycle End</th>
+                        <th>Max Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% maxData.forEach(ele => { %> 
+                    <tr>
+                        <td><%= ele.PayStart %> </td>
+                        <td><%= ele.PayEnd %> </td>
+                        <td>$<%= ele.Salary %> JMD </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <div class="table2">
+            <table>
+                <caption>Minimum Salary Payout</caption>
+
+                <thead>
+                    <tr>
+                        <th>Paycycle Start</th>
+                        <th>paycycle End</th>
+                        <th>Min Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% minData.forEach(ele => { %> 
+                    <tr>
+                        <td><%= ele.PayStart %> </td>
+                        <td><%= ele.PayEnd %> </td>
+                        <td>$<%= ele.Salary %> JMD</td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table1">
+            <table>
+                <caption>Total Salary Payout</caption>
+
+                <thead>
+                    <tr>
+                        <th>Paycycle Start</th>
+                        <th>paycycle End</th>
+                        <th>Total Salary Payout</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% total.forEach(ele => { %> 
+                    <tr>
+                        <td><%= ele.PayStart %> </td>
+                        <td><%= ele.PayEnd %> </td>
+                        <td>$<%= ele.Salary %> JMD </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>
