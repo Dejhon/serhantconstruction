@@ -205,6 +205,23 @@ router.post('/payroll', (req, res)=>{
 /*****************************************************/
 
 /**THIS BLOCK OF CODE DISPLAYS SALARY FOR ALL EMPLOYEES WITH A PARTICULAR DEPARTMENT**/
+router.get('/salary', (req, res)=>{
+  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname, sp.first_nm AS Supervisor, 
+  dp.name AS department, date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, 
+  date_format(p.pay_end_dt, '%Y-%m-%d') AS PayEnd, p.standard_pay AS StandardPay,
+  p.overtime_pay AS OvertimePay, p.salary AS Salary FROM serhantconstruction.payroll AS p 
+  JOIN serhantconstruction.employees  AS emp ON p.employee_id = emp.id JOIN 
+  serhantconstruction.departments AS dp ON emp.department_id = dp.id JOIN 
+  serhantconstruction.supervisors AS sp ON dp.spvsr_id = sp.id WHERE sp.first_nm = '${req.session.username}'`
+
+  conn.query(sql, (err, rows)=>{
+    if(err) throw err
+    res.render('salaries',{
+      data:rows
+    })
+  })
+
+})
 
 /*************************************************************************************/
 module.exports = router

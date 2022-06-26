@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/salaries.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/worker">HOME</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="table2">
+            <table>
+                <caption>SALARY BREAKDOWN</caption>
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Basic Pay</th>
+                        <th>Overtime Pay</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(pay => { %>
+                    <tr>
+                        <td><%=  pay.Firstname %>&nbsp;<%= pay.Lastname%> </td>
+                        <td>$<%= pay.StandardPay %>JMD </td>
+                        <td>$<%= pay.OvertimePay %>JMD </td>
+                        <td>$<%= pay.Salary %>JMD </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>
