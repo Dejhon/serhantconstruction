@@ -35,12 +35,14 @@
                 </tr>
             </thead>
             <tbody>
-                <form action="/supervisor/payroll" method="post">
+                <form action="/accountant/payroll" method="post">
 
                 <% data.forEach(emp => { %>
                     <tr>
                         <td>
                             <%= emp.Firstname%>
+                            <input type="hidden" value="<%= emp.Firstname %> " name="f_nm">
+                            <input type="hidden" value="<%= emp.Lastname %> " name="l_nm">
                             <input type="hidden" name="emp_id" value="<%= emp.empID %> ">
                             <input type="hidden" name="stnd_rt" value="<%= emp.StandardRate %> ">
                             <input type="hidden" name="over_rt" value="<%=emp.OvertimeRate %> ">

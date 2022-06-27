@@ -74,13 +74,13 @@ form{
 }
 
 
-.emp_nm{
+.emp_nm, .days_abs{
     display: grid;
     grid-template-columns: 50% 50%;
     gap: 1px;
 }
 
-.emp_nm input, .overtime_hrs input, .new_overtime input{
+.emp_nm input,.days_abs input, .overtime_hrs input, .new_overtime input{
     width: inherit;
     height: 30px;
     font-size: 18px;
@@ -93,11 +93,11 @@ form{
     margin-left: 20px;
 }
 
-.emp_nm, .overtime_hrs,.new_overtime, .sub_btn{
+.emp_nm, .overtime_hrs,.new_overtime, .sub_btn, .days_abs{
     margin-top: 20px;
 }
 
-.emp_nm label{
+.emp_nm label, .days_abs label{
     float: left;
     margin-left: 21px;
 }

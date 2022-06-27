@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/attendancetable.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/accountant">HOME</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Days Absent</th>
+                    <th>Standard Hours</th>
+                    <th>Overtime Hours</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(data){ %>
+                 <tr>
+                        <td><%= data.Firstname%> &nbsp;<%= data.Lastname%> </td>
+                        <td><%= data.PayStart%></td>
+                        <td><%= data.PayEnd %> </td>
+                        <td><%= data.DaysAbsent %> </td>
+                        <td><%= data.StandardHours %> </td>
+                        <td><%= data.OvertimeHours%></td>
+                        <td>
+                            <button><a href="/accountant/attendanceEdit/<%= data.ID %> ">Edit</a></button>
+                            <button class="salary"><a href="/accountant/pay/<%= data.ID %> ">Salary</a></button>
+                        </td>
+                 </tr>
+                <% } %>
+                <% if(!data){ %> 
+                    <tr>
+                        <td colspan="7" style="text-align: center; color:red;">No Data Found</td>
+                    </tr>
+                <% } %> 
+
+            </tbody>
+        </table>
+    </main>
+    
+</body>
+</html>

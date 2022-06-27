@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=  title %></title>
+
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/accountant">HOME</a></li>
+                <li><a href="/accountant/viewSalaryBreakdown">PAYCYCLES</a></li>
+                <li><a href="/accountant/search">VIEW PAYSLIPS</a></li>
+                <li class="login"><a href="/logout">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <table border="0">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(emp => { %>
+                    <tr>
+                        <td><%= emp.ID%></td>
+                        <td><%= emp.Firstname%></td>
+                        <td><%= emp.Lastname%></td>
+                        <td><%= emp.Department%></td>
+                        <td>
+                            <button><a href="/accountant/attendance/<%= emp.ID %> "> View Attendance</a></button>
+                        </td>
+                    </tr>
+                <% }) %>;
+                
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

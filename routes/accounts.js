@@ -5,51 +5,126 @@ const res = require('express/lib/response');
 const conn = require('../lib/db');
 var router = express.Router();
 
+/**THIS BLOCK OF CODE VIEWS EMPLOYEES**/
 router.get('/', (req, res)=>{
-    let sql = `SELECT p.id AS pID, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
-    date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(p.pay_end_dt, '%Y-%m-%d')
-    AS PayEnd, p.standard_pay AS StandardPay, p.overtime_pay AS OvertimePay, p.salary AS Salary
-    FROM serhantconstruction.payroll AS p JOIN serhantconstruction.employees
-    AS emp ON p.employee_id = emp.id `
+    let sql = `SELECT emp.id AS ID, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+    dp.name AS Department, sp.first_nm AS Supervisor_FirstName FROM serhantconstruction.employees 
+    AS emp JOIN serhantconstruction.departments AS dp ON emp.department_id = dp.id JOIN 
+    serhantconstruction.supervisors AS sp ON dp.spvsr_id = sp.id `
 
     conn.query(sql, (err, rows)=>{
         if(err) throw err
-        res.render('allSalaries',{
-            data:rows
-        })
-    })
-})
+        res.render('viewAttendance',{
+        title:"Employee Page",
+        data: rows
+    });
+  });
+});
+/*********************************************************************/
 
-router.get('/payslip/:id', (req, res)=>{
-    let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname,
-    date_format(p.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(p.pay_end_dt, '%Y-%m-%d')
-    AS PayEnd, p.standard_pay AS StandardPay, p.overtime_pay AS OvertimePay, p.salary AS Salary
-    FROM serhantconstruction.payroll AS p JOIN serhantconstruction.employees
-    AS emp ON p.employee_id = emp.id WHERE p.id =${req.params.id}`
-
-    conn.query(sql,(err,rows)=>{
-        if(err) throw err
-        res.render('payslipForm',{
+/**THIS BLOCK OF CODE VIEW EMPLOYESS ATTENDACE BY ID**/
+router.get('/attendance/:id', (req, res)=>{
+    let sql = `SELECT att.id AS ID, emp.first_nm AS Firstname, emp.last_nm AS Lastname,
+        date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
+        att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk AS StandardHours, 
+        att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate,
+        sp.first_nm AS Supervisor FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS
+        emp ON att.emp_id = emp.id JOIN serhantconstruction.departments AS dp ON emp.department_id= dp.id JOIN 
+        serhantconstruction.supervisors AS sp ON dp.spvsr_id = sp.id WHERE emp.id = ${req.params.id}`
+      
+        conn.query(sql, (err, rows)=>{
+          if(err) throw err
+          res.render('viewAttendanceId',{
             data:rows[0]
-        })
-    })
-})
+          });
+     });
+});
 
-router.post('/generate', (req, res)=>{
-    let data = {
-                 emp_first_nm: req.body.firstname,
-                 emp_last_nm: req.body.lastname,
-                 paycycle_start: req.body.start,
-                 paycycle_end: req.body.end,
-                 salary: req.body.salary
-    }
+router.get('/attendanceEdit/:id', (req, res)=>{
+  let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname, att.id AS ID,
+  date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') AS PayEnd, 
+  att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk AS StandardHours, 
+  att.overtime_hrs_wrk AS OvertimeHours, dp.standard_rate AS StandardRate, dp.overtime_rate AS OvertimeRate 
+  FROM serhantconstruction.attendance AS att JOIN serhantconstruction.employees AS emp ON att.emp_id = emp.id 
+  JOIN serhantconstruction.departments AS dp ON emp.department_id = dp.id WHERE att.id = ${req.params.id}`
 
-    conn.query("INSERT INTO payslip SET ?", data, (err, rows)=>{
+  conn.query(sql, (err, rows)=>{
+    if(err) throw err
+     res.render('attendanceEdit',{
+      data: rows[0]
+    });
+  });
+});
+
+router.post('/attendanceUpdate',(req, res)=>{
+     let maxWorkHrs = 160;
+     overtimeHrs = 0;
+
+     if(req.body.stnd_hrs > maxWorkHrs){
+        overtimeHrs = parseInt(req.body.stnd_hrs - maxWorkHrs);
+     }
+
+    let id = req.body.id;
+    let sql = `UPDATE attendance SET days_absent = ${req.body.days_abs},standard_hrs_wrk =${req.body.stnd_hrs}, overtime_hrs_wrk=${overtimeHrs} WHERE id =${id}`
+
+    conn.query(sql, (err, rows)=>{
+      if(err) throw err
+      res.redirect('/accountant')
+    });
+});
+/********************************************************************/
+
+/**THIS BLOCK OF CODE CALCULATE SALARY FOR EMPLPYEES**/
+router.get('/pay/:id', (req, res)=>{
+    let sql = `SELECT emp.first_nm AS Firstname, emp.last_nm AS Lastname, att.id AS ID,
+    date_format(att.pay_start_dt, '%Y-%m-%d') AS PayStart, date_format(att.pay_end_dt, '%Y-%m-%d') 
+    AS PayEnd,att.emp_id AS empID, att.days_absent AS DaysAbsent, att.total_days_wrk AS TotalDays, att.standard_hrs_wrk 
+    AS StandardHours, att.overtime_hrs_wrk AS OvertimeHours,dp.name AS Department, dp.standard_rate AS StandardRate,
+    dp.overtime_rate AS OvertimeRate FROM serhantconstruction.attendance AS att JOIN
+    serhantconstruction.employees AS emp ON att.emp_id = emp.id JOIN serhantconstruction.departments 
+    AS dp ON emp.department_id = dp.id WHERE att.id = ${req.params.id}`
+
+    conn.query(sql, (err, rows)=>{
+     if(err) throw err
+     res.render('empSalary', {
+       data:rows
+     })
+   });
+});
+
+router.post('/payroll', (req, res)=>{
+
+ let standardPay = ((req.body.stnd_rt * req.body.stnd_hrs) * req.body.totalDays).toFixed(2);
+ let overtimePay = ((req.body.over_rt * req.body.overtime_hrs) * req.body.totalDays).toFixed(2);
+ let salary = (parseInt(standardPay) + parseInt(overtimePay)).toFixed(2)
+ let data = {
+              employee_id: req.body.emp_id,
+              pay_start_dt: req.body.start_dt,
+              pay_end_dt: req.body.end_dt,
+              standard_pay: standardPay,
+              overtime_pay: overtimePay,
+              salary: salary
+            };
+
+let payslip = {
+    emp_first_nm: req.body.f_nm,
+    emp_last_nm:req.body.l_nm,
+    paycycle_start: req.body.start_dt,
+    paycycle_end: req.body.end_dt,
+    salary: salary
+}
+
+   conn.query("INSERT INTO payroll SET ?", data, (err, rows)=>{
+     if(err) throw err
+     conn.query("INSERT INTO payslip SET?", payslip, (err,rows)=>{
         if(err) throw err
-        res.redirect('/accountant/')
-    })
+        res.redirect('/accountant')
+     })
+   })
 })
+/*****************************************************/
 
+/**THIS ROUTE SEARCHES FOR EMPLOYEE PAY SLIP**/
 router.get('/search', (req, res)=>{
     res.render('slipSearch')
 })
@@ -68,8 +143,9 @@ AND ps.emp_last_nm LIKE '%${req.body.l_nm}%'`
         })
     })
 })
+/*********************************************/
 
-
+/**THIS BLOCK GIVES SALARY BREAKDOWN USING AGGREGATE FUNCTIONS**/
 router.get('/viewSalaryBreakdown', (req, res)=>{
     res.render("dateRange")
 })
@@ -109,11 +185,11 @@ router.post('/breakdown',(req, res)=>{
                     maxData:maxrows,
                     minData:minrows,
                     total: Trows
-                })
-            })
-        })
-    })
-
-})
+                });
+            });
+        });
+    });
+});
+/**********************************************************/
 
 module.exports = router

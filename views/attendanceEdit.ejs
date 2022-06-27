@@ -20,7 +20,7 @@
     </header>
 
     <main>
-        <form action="/supervisor/attendanceUpdate" method="post">
+        <form action="/accountant/attendanceUpdate" method="post">
             <div class="container">
                 <div class="emp_nm">
                     <div class="first">
@@ -33,13 +33,23 @@
                         <input type="text" value="<%= data.Lastname %> " readonly>
                     </div>
                 </div>
+                <div class="days_abs">
+                    <div class="current_days">
+                        <label for="">Days Absent:</label>
+                        <input type="text" value="<%= data.DaysAbsent %> " readonly>
+                    </div>
+                    <div class="new_days">
+                        <label for="">Days Absent:</label>
+                        <input type="text" name="days_abs" required>
+                    </div>                    
+                </div>
                 <div class="overtime_hrs">
-                    <label for="">Current Overtime Hours:</label>
-                    <input type="number" value="<%= data.OvertimeHours%>" readonly>
+                    <label for="">Current Standard Hours:</label>
+                    <input type="number" value="<%= data.StandardHours%>" readonly>
                 </div>
                 <div class="new_overtime">
-                    <label for="">New Overtime Hours:</label>
-                    <input type="text" name="new_overtime" required>
+                    <label for="">New Standard Hours:</label>
+                    <input type="text" name="stnd_hrs" required>
                 </div>
                 <div class="sub_btn">
                     <input type="submit" value="UPDATE">
