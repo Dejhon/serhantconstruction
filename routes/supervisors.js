@@ -96,6 +96,12 @@ router.get('/attendance/:id', (req, res)=>{
      let year = dt.getFullYear();
      let daysInMonth = new Date(year, month, 0).getDate();
      let dayswork = daysInMonth - req.body.abs_day
+     let maxWorkHrs = 160;
+     overtimeHrs = 0;
+
+     if(req.body.stnd_tm > maxWorkHrs){
+        overtimeHrs = req.body.stnd_tm - maxWorkHrs;
+     }
     //  let hrsWork = req.body.tot_dats_wrk * 8
     //  let days_abs = daysInMonth - req.body.days_wrk;
   
@@ -106,7 +112,7 @@ router.get('/attendance/:id', (req, res)=>{
                    days_absent: req.body.abs_day,
                    total_days_wrk: dayswork,
                    standard_hrs_wrk: req.body.stnd_tm,
-                   overtime_hrs_wrk: req.body.over_tm
+                   overtime_hrs_wrk: overtimeHrs
                  }
       
       let sql = "INSERT INTO attendance SET ?"
@@ -186,14 +192,14 @@ router.get('/pay/:id', (req, res)=>{
 router.post('/payroll', (req, res)=>{
 
   let standardPay = ((req.body.stnd_rt * req.body.stnd_hrs) * req.body.totalDays).toFixed(2);
-  let overtimePay = ((req.body.over_rt * req.body.overtime_hrs) * req.body.totalDays).toFixed(2)
+  let overtimePay = ((req.body.over_rt * req.body.overtime_hrs) * req.body.totalDays).toFixed(2);
   let salary = (parseInt(standardPay) + parseInt(overtimePay)).toFixed(2)
   let data = {
                employee_id: req.body.emp_id,
                pay_start_dt: req.body.start_dt,
                pay_end_dt: req.body.end_dt,
                standard_pay: standardPay,
-               overtime_pay: overtimePay,
+              //  overtime_pay: overtimePay,
                salary: salary
              }
 

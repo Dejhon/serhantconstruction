@@ -72,7 +72,7 @@ input{
     outline: none;
 }
 
-.names, .dates, .times{
+.names, .dates{
     display: grid;
     grid-template-columns: 50% 50%;
     gap: 10px;
@@ -82,11 +82,11 @@ input{
     margin-top: 30px;
 }
 
-.password, .absent, .workdays, .sub_btn, .month{
+.password, .absent, .workdays, .sub_btn, .month, .times{
     display: grid;
     grid-template-columns: 100%;
 }
-.names input, .dates input, .times input{
+.names input, .dates input{
     width: 185px;
 }
 
